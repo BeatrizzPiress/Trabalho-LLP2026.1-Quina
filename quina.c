@@ -12,6 +12,7 @@
 
 int  sortear(int,int);
 void sortear_quina(int*);
+void mostrar_quina(int*);
 void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 
@@ -34,14 +35,7 @@ main() {
 	for (j=0; j < n; ++j) {
 		sortear_quina(jogos[j]);
 		ordenar(jogos[j], 5);
-	}
-
-	int i;
-	for (j=0; j < n; ++j) {
-		for (i=0; i < 5; ++i) {
-			printf("%d, ", jogos[j][i]);
-		}
-		putchar('\n');
+		mostrar_quina(jogos[j]);
 	}
 
 	return 0;
@@ -91,6 +85,15 @@ ordenar(int *lista, int n)
 	}
 }
 
+
+void
+mostrar_quina(int *lista)
+{
+	const int N=5;
+	int i;
+	for (i=0; i < N; ++i)
+		printf("%02d%c", lista[i], (i != N-1) ? '-' : '\n');
+}
 
 int
 eh_repetido(int n, int *lista, int index)
