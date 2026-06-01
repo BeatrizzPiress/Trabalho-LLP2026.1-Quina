@@ -38,6 +38,25 @@ main() {
 		ordenar(jogos[j], 5);
 		mostrar_quina(jogos[j]);
 	}
+
+	int vencedor[5];
+
+   sortear_quina(vencedor);
+   ordenar(vencedor,5);
+
+   for(j = 0; j < n; j++) {
+	int acertos;
+
+	acertos = contar_acertos(jogos[j], vencedor);
+
+	printf("Jogo %d: %d acertos\n", j + 1, acertos);
+
+	if(acertos == 5) {
+		printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+	}
+
+	printf("\n");
+}
 	return 0;
 }
 
