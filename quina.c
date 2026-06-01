@@ -6,7 +6,14 @@
 
 #include<stdio.h>
 #include<locale.h>
+#include<time.h>
+#include<stdlib.h>
 
+
+int  sortear(int,int);
+
+
+int
 main() {
 	
 	int n;
@@ -16,4 +23,24 @@ main() {
 	scanf("%d", &n);
 	
 	printf("Estou sorteando = %d jogos! ", n);
+
+	srand(time(NULL));
+
+	printf("Sorteio: %02d\n", sortear(0,80));
+	
+	return 0;
+}
+
+
+/*	Sortea número de A a B */
+int
+sortear(int a, int b) {
+  const int range = b - a + 1;
+  int n;
+
+	do {
+		n = rand();
+	} while (n >= (RAND_MAX - RAND_MAX % range));
+	
+	return n % range + a;
 }
