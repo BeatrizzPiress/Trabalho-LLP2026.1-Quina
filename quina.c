@@ -15,6 +15,7 @@ void sortear_quina(int*);
 void mostrar_quina(int*);
 void ordenar(int*,int);
 int eh_repetido(int,int*,int);
+int contar_acertos(int*, int*);
 
 
 int
@@ -37,7 +38,6 @@ main() {
 		ordenar(jogos[j], 5);
 		mostrar_quina(jogos[j]);
 	}
-
 	return 0;
 }
 
