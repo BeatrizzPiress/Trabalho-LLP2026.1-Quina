@@ -61,7 +61,7 @@ sortear_quina(int* jogo) {
 	const int N = 5;
 	int i;
 	for (i=0; i < N; ++i)
-		do jogo[i] = sortear(0,80);
+		do jogo[i] = sortear(1,80);
 		while ( eh_repetido(jogo[i], jogo, i) );
 }
 
