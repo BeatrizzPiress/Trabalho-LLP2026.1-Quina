@@ -11,6 +11,7 @@
 
 
 int  sortear(int,int);
+void sortear_quina(int*);
 
 
 int
@@ -22,12 +23,24 @@ main() {
 	printf("Quantos jogos você quer jogar? \n");
 	scanf("%d", &n);
 	
-	printf("Estou sorteando = %d jogos! ", n);
+	printf("Estou sorteando = %d jogos!\n", n);
 
 	srand(time(NULL));
-
-	printf("Sorteio: %02d\n", sortear(0,80));
 	
+	int j, jogos[n][5]={};
+	
+	for (j=0; j < n; ++j) {
+		sortear_quina(jogos[j]);
+	}
+
+	int i;
+	for (j=0; j < n; ++j) {
+		for (i=0; i < 5; ++i) {
+			printf("%d, ", jogos[j][i]);
+		}
+		putchar('\n');
+	}
+
 	return 0;
 }
 
@@ -44,3 +57,13 @@ sortear(int a, int b) {
 	
 	return n % range + a;
 }
+
+
+void
+sortear_quina(int* jogo) {
+	const int N = 5;
+	int i;
+	for (i=0; i < N; ++i)
+		jogo[i] = sortear(0,80);
+}
+
