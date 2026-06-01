@@ -12,6 +12,7 @@
 
 int  sortear(int,int);
 void sortear_quina(int*);
+int eh_repetido(int,int*,int);
 
 
 int
@@ -26,7 +27,7 @@ main() {
 	printf("Estou sorteando = %d jogos!\n", n);
 
 	srand(time(NULL));
-	
+
 	int j, jogos[n][5]={};
 	
 	for (j=0; j < n; ++j) {
@@ -64,6 +65,18 @@ sortear_quina(int* jogo) {
 	const int N = 5;
 	int i;
 	for (i=0; i < N; ++i)
-		jogo[i] = sortear(0,80);
+		do jogo[i] = sortear(0,80);
+		while ( eh_repetido(jogo[i], jogo, i) );
+}
+
+
+int
+eh_repetido(int n, int *lista, int index)
+{
+	int i;
+	for (i=0; i < index; ++i)
+		if (n == lista[i])
+			return 1;
+	return 0;
 }
 
