@@ -105,3 +105,20 @@ eh_repetido(int n, int *lista, int index)
 	return 0;
 }
 
+int
+contar_acertos(int *jogo, int *ganhador) // func p contar acertos 
+{
+	int i, j;
+	int acertos = 0;
+	for(i = 0; i < 5; i++)
+	{
+		for(j = 0; j < 5; j++)
+		{
+			if(jogo[i] == ganhador[j])
+			{
+				acertos++;
+			}
+		}
+	}
+	return acertos;
+}
