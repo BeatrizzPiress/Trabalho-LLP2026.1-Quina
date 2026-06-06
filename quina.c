@@ -16,12 +16,14 @@ void mostrar_quina(int*);
 void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
+int salvar_jogo(int*,FILE*);
 
 
 int
 main() {
 	
 	int n;
+	FILE *arq;
 	
 	setlocale(LC_ALL, "Portuguese");
 	printf("Quantos jogos você quer jogar? \n");
@@ -30,6 +32,8 @@ main() {
 	printf("Estou sorteando = %d jogos!\n", n);
 
 	srand(time(NULL));
+	if (! (arq=fopen("dados.txt", "w")) )
+		puts("Error ao abrir arquivo.");
 
 	int j, jogos[n][5]={};
 	
@@ -37,6 +41,7 @@ main() {
 		sortear_quina(jogos[j]);
 		ordenar(jogos[j], 5);
 		mostrar_quina(jogos[j]);
+		salvar_jogo(jogos[j], arq);
 	}
 
 	int vencedor[5];
@@ -141,3 +146,14 @@ contar_acertos(int *jogo, int *ganhador) // func p contar acertos
 	}
 	return acertos;
 }
+
+int
+salvar_jogo(int *jogo, FILE *arq)
+{
+	const int N=5;
+	int i;
+	for (i = 0; i < N; ++i)
+		fprintf(arq, "%02d%c", jogo[i], (i < N-1) ? '-' : '\n');
+	return 0;
+}
+
