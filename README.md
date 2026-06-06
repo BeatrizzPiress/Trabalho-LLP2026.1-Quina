@@ -11,10 +11,11 @@ Trabalho do Esdras.
 - [x] gerar um jogo aleatorio (5 números de 01 a 80) [Bia e Vinicius]
 - - [x] gerar número aleatório [vinicius]
 - - [x] formatar [vinicius]
-- - [ ] escrever arquivo [vinicius]
+- - [x] escrever arquivo [vinicius]
 - [x] verificar se ganhou o prêmio[Bia]
 - - [x] perguntar a sequência ganhadora [Bia]
 - - [ ] ler arquivo[Bia]
 - - [x] comparar se acertou[Bia]
-- - - [ ] quantos acertou [vinicius]
+- - - [x] quantos acertou [Bia]
 - - - [ ] ordenar por acertos [vinicius]
+- [ ] menu (Sortear e Salvar, Ler, Verificar, Sair)

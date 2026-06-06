@@ -1,7 +1,12 @@
 /*
 	ALunos(a): Ana Beatriz Sousa Pires e Antônio Vinicius de Sousa Martins
 	Loteria escolhida: Quina
-	Descrição: Jogar 5 números de 01 a 80. 
+	Descrição: Jogar 5 números de 01 a 80, gera apostas da Quina, salva os jogos em arquivo,
+	lê os jogos gravados e verifica os acertos a partir da sequência
+	ganhadora informada pelo usuário.
+
+	Repositório GitHub:
+	https://github.com/BeatrizzPiress/Trabalho-LLP2026.1-Quina
 */
 
 #include<stdio.h>
@@ -13,10 +18,12 @@
 int  sortear(int,int);
 void sortear_quina(int*);
 void mostrar_quina(int*);
+void mostrar_quina_acertos(int*,int* premio);
 void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
+void ler_arquivo();
 
 int
 main() {
@@ -68,8 +75,20 @@ main() {
 		mostrar_quina(jogos[j]);
 		salvar_jogo(jogos[j], arq);
 	}
+	fclose(arq);
 
-	int vencedor[5];
+    ler_arquivo();
+
+    int vencedor[5];
+
+    printf("\nDigite os 5 numeros da sequencia ganhadora: ");
+
+    scanf("%d %d %d %d %d",
+	  &vencedor[0],
+      &vencedor[1],
+	  &vencedor[2],
+	  &vencedor[3],
+	  &vencedor[4]);
 
    sortear_quina(vencedor);
    ordenar(vencedor,5);
@@ -77,15 +96,16 @@ main() {
    mostrar_quina(vencedor);
    printf("\033[m");
 
-   for(j = 0; j < n; j++) {
-	int acertos;
+    printf("Premiado: ");
+    mostrar_quina(vencedor);
 
-	acertos = contar_acertos(jogos[j], vencedor);
+    for(j = 0; j < n; j++) {
+	 int acertos;
 
 	printf("Jogo %d: %d acertos", j + 1, acertos);
 
 	if(acertos == 5) {
-		printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+	 	printf(" - PARABÉNS, VC GANHOU A QUINA!");
 	}
 
 	printf("\n");
@@ -150,6 +170,16 @@ mostrar_quina(int *lista)
 		printf("%02d%c", lista[i], (i != N-1) ? '-' : '\n');
 }
 
+void
+mostrar_quina_acertos(int *lista, int *premio)
+{
+	const int N=5;
+	const char normal[]="\033[m", destaque[]="\033[42;30m";
+	int i;
+	for (i=0; i < N; ++i)
+		printf("%s%02d%s%c", (lista[i] == premio[i]) ? destaque : normal, lista[i], normal, (i != N-1) ? '-' : '\n');
+}
+
 int
 eh_repetido(int n, int *lista, int index)
 {
@@ -187,4 +217,29 @@ salvar_jogo(int *jogo, FILE *arq)
 		fprintf(arq, "%02d%c", jogo[i], (i < N-1) ? '-' : '\n');
 	return 0;
 }
+
+void
+ler_arquivo()
+{
+	FILE *arq;
+	char linha[50];
+
+	arq = fopen("dados.txt", "r");
+
+	if(arq == NULL)
+	{
+		printf("Erro ao abrir arquivo!\n");
+		return;
+	}
+
+	printf("\nJogos gravados no arquivo:\n");
+
+	while(fgets(linha, 50, arq) != NULL)
+	{
+		printf("%s", linha);
+	}
+
+	fclose(arq);
+}
+
 
