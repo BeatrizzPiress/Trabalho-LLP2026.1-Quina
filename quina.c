@@ -18,6 +18,7 @@ void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
+void ler_arquivo();
 
 
 int
@@ -44,6 +45,9 @@ main() {
 		mostrar_quina(jogos[j]);
 		salvar_jogo(jogos[j], arq);
 	}
+	fclose(arq);
+
+    ler_arquivo();
 
 	int vencedor[5];
 
@@ -168,4 +172,29 @@ salvar_jogo(int *jogo, FILE *arq)
 		fprintf(arq, "%02d%c", jogo[i], (i < N-1) ? '-' : '\n');
 	return 0;
 }
+
+void
+ler_arquivo()
+{
+	FILE *arq;
+	char linha[50];
+
+	arq = fopen("dados.txt", "r");
+
+	if(arq == NULL)
+	{
+		printf("Erro ao abrir arquivo!\n");
+		return;
+	}
+
+	printf("\nJogos gravados no arquivo:\n");
+
+	while(fgets(linha, 50, arq) != NULL)
+	{
+		printf("%s", linha);
+	}
+
+	fclose(arq);
+}
+
 
