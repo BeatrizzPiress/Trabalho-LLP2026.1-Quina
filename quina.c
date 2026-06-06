@@ -1,7 +1,12 @@
 /*
 	ALunos(a): Ana Beatriz Sousa Pires e Antônio Vinicius de Sousa Martins
 	Loteria escolhida: Quina
-	Descrição: Jogar 5 números de 01 a 80. 
+	Descrição: Jogar 5 números de 01 a 80, gera apostas da Quina, salva os jogos em arquivo,
+	lê os jogos gravados e verifica os acertos a partir da sequência
+	ganhadora informada pelo usuário.
+
+	Repositório GitHub:
+	https://github.com/BeatrizzPiress/Trabalho-LLP2026.1-Quina
 */
 
 #include<stdio.h>
@@ -49,26 +54,34 @@ main() {
 
     ler_arquivo();
 
-	int vencedor[5];
+    int vencedor[5];
 
-   sortear_quina(vencedor);
-   ordenar(vencedor,5);
-   printf("Premiado: ");
-   mostrar_quina_acertos(vencedor,vencedor);
+    printf("\nDigite os 5 numeros da sequencia ganhadora: ");
 
-   for(j = 0; j < n; j++) {
-	int acertos;
+    scanf("%d %d %d %d %d",
+	  &vencedor[0],
+      &vencedor[1],
+	  &vencedor[2],
+	  &vencedor[3],
+	  &vencedor[4]);
 
-	acertos = contar_acertos(jogos[j], vencedor);
+    ordenar(vencedor,5);
 
-	printf("Jogo %d: %d acertos | ", j + 1, acertos);
-	mostrar_quina_acertos(jogos[j], vencedor);
+    printf("Premiado: ");
+    mostrar_quina(vencedor);
+
+    for(j = 0; j < n; j++) {
+	 int acertos;
+
+	 acertos = contar_acertos(jogos[j], vencedor);
+
+	 printf("Jogo %d: %d acertos | ", j + 1, acertos);
+	 mostrar_quina_acertos(jogos[j], vencedor);
 
 	if(acertos == 5) {
-		printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+	 	printf(" - PARABÉNS, VC GANHOU A QUINA!");
 	}
 }
-	return 0;
 }
 
 
