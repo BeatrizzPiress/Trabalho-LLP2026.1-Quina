@@ -18,14 +18,39 @@ int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
 
-
 int
 main() {
 	
-	int n;
+	int n, escolha;
 	FILE *arq;
 	
 	setlocale(LC_ALL, "Portuguese");
+
+	puts(
+		"[ 1 ] Sortear e Salvar\n"
+		"[ 2 ] Ler\n"
+		"[ 3 ] Verificar\n"
+		"[ 0 ] Sair");
+	do {
+		printf("--> ");
+		scanf("%d", &escolha);
+		switch (escolha) {
+			case 1:
+				puts("--- Sorteando ---");
+				break;
+			case 2:
+				puts("--- Lendo ---");
+				break;
+			case 3:
+				puts("--- Verificando ---");
+				break;
+			case 0:
+				break;
+			default:
+				puts("Desulpa. Não entendi.");
+		}
+	} while (escolha != 0);
+
 	printf("Quantos jogos você quer jogar? \n");
 	scanf("%d", &n);
 	
@@ -48,20 +73,26 @@ main() {
 
    sortear_quina(vencedor);
    ordenar(vencedor,5);
+   printf("Sequência Ganhadora: \033[7m");
+   mostrar_quina(vencedor);
+   printf("\033[m");
 
    for(j = 0; j < n; j++) {
 	int acertos;
 
 	acertos = contar_acertos(jogos[j], vencedor);
 
-	printf("Jogo %d: %d acertos\n", j + 1, acertos);
+	printf("Jogo %d: %d acertos", j + 1, acertos);
 
 	if(acertos == 5) {
 		printf(" - PARABÉNS, VC GANHOU  A QUINA!");
 	}
 
 	printf("\n");
-}
+	}
+	
+	
+	
 	return 0;
 }
 
