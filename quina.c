@@ -13,6 +13,7 @@
 int  sortear(int,int);
 void sortear_quina(int*);
 void mostrar_quina(int*);
+void mostrar_quina_acertos(int*,int* premio);
 void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
@@ -48,19 +49,20 @@ main() {
 
    sortear_quina(vencedor);
    ordenar(vencedor,5);
+   printf("Premiado: ");
+   mostrar_quina_acertos(vencedor,vencedor);
 
    for(j = 0; j < n; j++) {
 	int acertos;
 
 	acertos = contar_acertos(jogos[j], vencedor);
 
-	printf("Jogo %d: %d acertos\n", j + 1, acertos);
+	printf("Jogo %d: %d acertos | ", j + 1, acertos);
+	mostrar_quina_acertos(jogos[j], vencedor);
 
 	if(acertos == 5) {
 		printf(" - PARABÉNS, VC GANHOU  A QUINA!");
 	}
-
-	printf("\n");
 }
 	return 0;
 }
@@ -117,6 +119,16 @@ mostrar_quina(int *lista)
 	int i;
 	for (i=0; i < N; ++i)
 		printf("%02d%c", lista[i], (i != N-1) ? '-' : '\n');
+}
+
+void
+mostrar_quina_acertos(int *lista, int *premio)
+{
+	const int N=5;
+	const char normal[]="\033[m", destaque[]="\033[42;30m";
+	int i;
+	for (i=0; i < N; ++i)
+		printf("%s%02d%s%c", (lista[i] == premio[i]) ? destaque : normal, lista[i], normal, (i != N-1) ? '-' : '\n');
 }
 
 int
