@@ -44,20 +44,25 @@ main() {
 		salvar_jogo(jogos[j], arq);
 	}
 
-	int vencedor[5];
+	/* não pode usar struct
+		pq não foi passado em sala :'( */
+	int vencedor[5], resultados[n][2]={};
+	#define JOGO   0
+	#define ACERTO 1
 
-   sortear_quina(vencedor);
-   ordenar(vencedor,5);
+	sortear_quina(vencedor);
+	ordenar(vencedor,5);
+	printf("Premiada: ");
+	mostrar_quina(vencedor);
 
-   for(j = 0; j < n; j++) {
-	int acertos;
-
-	acertos = contar_acertos(jogos[j], vencedor);
-
-	printf("Jogo %d: %d acertos\n", j + 1, acertos);
-
-	if(acertos == 5) {
-		printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+	for(j = 0; j < n; j++) {
+		resultados[j][JOGO] = j;
+		resultados[j][ACERTO] = contar_acertos(jogos[j], vencedor);
+		printf("Jogo %d: %d acertos | ", j + 1, resultados[j][ACERTO]);
+		mostrar_quina(jogos[j]);
+		if(resultados[j][ACERTO] == 5) {
+			printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+		}
 	}
 
 	printf("\n");
