@@ -17,6 +17,8 @@ void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
+void ordenar_resultados(int resultados[][2], int n);
+void copy(int n, int *a, int *b);
 
 
 int
@@ -65,8 +67,18 @@ main() {
 		}
 	}
 
-	printf("\n");
-}
+	puts("---- Ordenado:");
+	ordenar_resultados(resultados, n);
+
+	for(j = 0; j < n; j++) {
+		printf("Jogo %d: %d acertos | ", resultados[j][JOGO]+1, resultados[j][ACERTO]);
+		mostrar_quina(jogos[j]);
+		if(resultados[j][ACERTO] == 5) {
+			printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+		}
+	}
+
+
 	return 0;
 }
 
@@ -112,6 +124,40 @@ ordenar(int *lista, int n)
 		lista[j] = lista[i_min];
 		lista[i_min] = aux;
 	}
+}
+
+
+void
+ordenar_resultados(int resultados[][2], int n)
+{
+	#define JOGO   0
+	#define ACERTO 1
+	const int N=2;
+	int j, i, i_max, aux_list[N]={};
+
+	for (j=0; j < n; ++j) {
+		i_max = j;
+		
+		for (i=j; i < n; ++i) {
+			if (resultados[i][ACERTO] > resultados[i_max][ACERTO])
+				i_max = i;
+		}
+		
+		copy(N, resultados[j],     aux_list);
+		copy(N, resultados[i_max], resultados[j]);
+		copy(N, aux_list         , resultados[i_max]);
+	}
+}
+
+
+/* não pode usar sizeof
+	pq não foi passado em sala :'( */
+void
+copy(int n, int *list_a, int *list_b)
+{
+  int i;
+  for (i=0; i < n; ++i)
+  	list_b[i] = list_a[i];
 }
 
 
