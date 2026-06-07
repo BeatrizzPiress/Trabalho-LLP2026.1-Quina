@@ -143,9 +143,11 @@ ordenar_resultados(int resultados[][2], int n)
 				i_max = i;
 		}
 		
-		copy(N, resultados[j],     aux_list);
-		copy(N, resultados[i_max], resultados[j]);
-		copy(N, aux_list         , resultados[i_max]);
+		for (i=j; i < i_max; ++i) {
+			copy(N, resultados[i], aux_list);
+			copy(N, resultados[i_max], resultados[i]);
+			copy(N, aux_list, resultados[i_max]);
+		}
 	}
 }
 
