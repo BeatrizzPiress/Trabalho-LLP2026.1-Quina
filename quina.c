@@ -25,8 +25,8 @@ int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
 void ler_arquivo();
 
-void sortear_salvar(int n, int jogos[][5], FILE);
-void ler(int *n, int jogos[][5]);
+void sortear_salvar(int n, int jogos[][5], FILE*);
+void ler(int *n_addr, int jogos[][5]);
 void verificar(int quinas[][5]);
 
 int
@@ -36,6 +36,7 @@ main() {
 	FILE *arq;
 	
 	setlocale(LC_ALL, "Portuguese");
+	srand(time(NULL));
 
 	puts(
 		"[ 1 ] Sortear e Salvar\n"
@@ -46,9 +47,14 @@ main() {
 		printf("--> ");
 		scanf("%d", &escolha);
 		switch (escolha) {
-			case 1:
+			case 1: {
 				puts("--- Sorteando ---");
+				printf("Quantos jogos você quer jogar? \n");
+				scanf("%d", &n);
+				int jogos[n][5]={};
+				sortear_salvar(n, jogos, arq);
 				break;
+			}
 			case 2:
 				puts("--- Lendo ---");
 				break;
@@ -62,28 +68,13 @@ main() {
 		}
 	} while (escolha != 0);
 
-	printf("Quantos jogos você quer jogar? \n");
-	scanf("%d", &n);
-	
-	printf("Estou sorteando = %d jogos!\n", n);
+	printf("Peguei N: %d\n", n);
+	exit(0);
 
-	srand(time(NULL));
-	if (! (arq=fopen("dados.txt", "w")) )
-		puts("Error ao abrir arquivo.");
-
-	int j, jogos[n][5]={};
-	
-	for (j=0; j < n; ++j) {
-		sortear_quina(jogos[j]);
-		ordenar(jogos[j], 5);
-		mostrar_quina(jogos[j]);
-		salvar_jogo(jogos[j], arq);
-	}
-	fclose(arq);
 
     ler_arquivo();
 
-    int vencedor[5];
+    int j,vencedor[5];
 
     printf("\nDigite os 5 numeros da sequencia ganhadora: ");
 
@@ -246,4 +237,25 @@ ler_arquivo()
 	fclose(arq);
 }
 
+
+void
+sortear_salvar(int n, int jogos[][5], FILE *arq)
+{
+	int j;
+
+	printf("Estou sorteando = %d jogos!\n", n);
+
+	if (! (arq=fopen("dados.txt", "w")) )
+		puts("Error ao abrir arquivo.");
+
+	
+	for (j=0; j < n; ++j) {
+		sortear_quina(jogos[j]);
+		ordenar(jogos[j], 5);
+		mostrar_quina(jogos[j]);
+		salvar_jogo(jogos[j], arq);
+	}
+	
+	fclose(arq);
+}
 
