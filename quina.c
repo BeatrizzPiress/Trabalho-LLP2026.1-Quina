@@ -27,7 +27,7 @@ int salvar_jogo(int*,FILE*);
 int ler_arquivo(int jogos_lidos[][5]);
 
 
-void sortear_salvar(int n, int jogos[][5], FILE*);
+int sortear_salvar(int jogos[][5]);
 int ler(int jogos[][5]);
 void verificar(int quinas[][5]);
 
@@ -35,7 +35,6 @@ int
 main() {
 	
 	int n, escolha, jogos[MAX][5];  // sem usar malloc
-	FILE *arq;
 	
 	setlocale(LC_ALL, "Portuguese");
 	srand(time(NULL));
@@ -51,9 +50,7 @@ main() {
 		switch (escolha) {
 			case 1: {
 				puts("--- Sorteando ---");
-				printf("Quantos jogos você quer jogar? \n");
-				scanf("%d", &n);
-				sortear_salvar(n, jogos, arq);
+				n = sortear_salvar(jogos);
 				break;
 			}
 			case 2:
@@ -240,11 +237,14 @@ ler_arquivo(int jogos_lidos[][5])
 }
 
 
-void
-sortear_salvar(int n, int jogos[][5], FILE *arq)
+int
+sortear_salvar(int jogos[][5])
 {
-	int j;
+	int j, n;
+	FILE *arq;
 
+	printf("Quantos jogos você quer jogar? \n");
+	scanf("%d", &n);
 	printf("Estou sorteando = %d jogos!\n", n);
 
 	if (! (arq=fopen("dados.txt", "w")) )
@@ -259,6 +259,9 @@ sortear_salvar(int n, int jogos[][5], FILE *arq)
 	}
 	
 	fclose(arq);
+	puts("Salvo em disco.");
+
+	return n;
 }
 
 
