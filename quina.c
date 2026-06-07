@@ -29,12 +29,12 @@ int ler_arquivo(int jogos_lidos[][5]);
 
 int sortear_salvar(int jogos[][5]);
 int ler(int jogos[][5]);
-void verificar(int quinas[][5]);
+void verificar(int n, int quinas[][5]);
 
 int
 main() {
 	
-	int n, escolha, jogos[MAX][5];  // sem usar malloc
+	int n=-1, escolha, jogos[MAX][5];  // sem usar malloc
 	
 	setlocale(LC_ALL, "Portuguese");
 	srand(time(NULL));
@@ -48,17 +48,17 @@ main() {
 		printf("--> ");
 		scanf("%d", &escolha);
 		switch (escolha) {
-			case 1: {
+			case 1:
 				puts("--- Sorteando ---");
 				n = sortear_salvar(jogos);
 				break;
-			}
 			case 2:
 				puts("--- Lendo ---");
 				n = ler(jogos);
 				break;
 			case 3:
 				puts("--- Verificando ---");
+				verificar(n, jogos);
 				break;
 			case 0:
 				break;
@@ -67,41 +67,6 @@ main() {
 		}
 	} while (escolha != 0);
 
-	printf("Peguei N: %d\n", n);
-	//exit(0);
-
-
-    int j,vencedor[5];
-    
-
-    printf("\nDigite os 5 numeros da sequencia ganhadora (ex: 01-10-25-35-70): ");
-
-    scanf("%d-%d-%d-%d-%d",
-	 &vencedor[0],
-	 &vencedor[1],
-	 &vencedor[2],
-	 &vencedor[3],
-	 &vencedor[4]);
-
-    ordenar(vencedor,5);
-
-    printf("Premiado: ");
-    mostrar_quina(vencedor);
-
-    for(j = 0; j < n; j++) {
-	int acertos;
-
-	/*
-	acertos = contar_acertos(jogos_lidos[j], vencedor);
-
-	 printf("Jogo %d: %d acertos | ", j + 1, acertos);
-	 mostrar_quina_acertos(jogos_lidos[j], vencedor);
-
-	if(acertos == 5) {
-	 	printf(" - PARABÉNS, VC GANHOU A QUINA!");
-	}
-	*/
-}
     return 0;
 }
 
@@ -278,5 +243,43 @@ int ler(int jogos_lidos[][5])
   }
 
   return n;
+}
+
+void
+verificar(int n, int jogos_lidos[][5])
+{
+    int j,vencedor[5];
+    
+		if (n == -1) {
+			puts("Nenhum jogo sorteado ou lido ainda.");
+			return;
+		}
+
+    printf("\nDigite os 5 numeros da sequencia ganhadora (ex: 01-10-25-35-70): ");
+
+    scanf("%d-%d-%d-%d-%d",
+	 &vencedor[0],
+	 &vencedor[1],
+	 &vencedor[2],
+	 &vencedor[3],
+	 &vencedor[4]);
+
+    ordenar(vencedor,5);
+
+    printf("Premiado: ");
+    mostrar_quina(vencedor);
+
+    for(j = 0; j < n; j++) {
+	int acertos;
+
+	acertos = contar_acertos(jogos_lidos[j], vencedor);
+
+	 printf("Jogo %d: %d acertos | ", j + 1, acertos);
+	 mostrar_quina_acertos(jogos_lidos[j], vencedor);
+
+	if(acertos == 5) {
+	 	printf(" - PARABÉNS, VC GANHOU A QUINA!");
+	}
+}
 }
 
