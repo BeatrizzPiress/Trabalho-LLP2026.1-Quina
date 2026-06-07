@@ -1,7 +1,12 @@
 /*
 	ALunos(a): Ana Beatriz Sousa Pires e Antônio Vinicius de Sousa Martins
 	Loteria escolhida: Quina
-	Descrição: Jogar 5 números de 01 a 80. 
+	Descrição: Jogar 5 números de 01 a 80, gera apostas da Quina, salva os jogos em arquivo,
+	lê os jogos gravados e verifica os acertos a partir da sequência
+	ganhadora informada pelo usuário.
+
+	Repositório GitHub:
+	https://github.com/BeatrizzPiress/Trabalho-LLP2026.1-Quina
 */
 
 #include<stdio.h>
@@ -13,12 +18,14 @@
 int  sortear(int,int);
 void sortear_quina(int*);
 void mostrar_quina(int*);
+void mostrar_quina_acertos(int*,int* premio);
 void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
 void ordenar_resultados(int resultados[][2], int n);
 void copy(int n, int *a, int *b);
+int ler_arquivo(int jogos_lidos[][5]);
 
 
 int
@@ -45,18 +52,41 @@ main() {
 		mostrar_quina(jogos[j]);
 		salvar_jogo(jogos[j], arq);
 	}
+	
+	fclose(arq);
+
+    int jogos_lidos[n][5];
+
+    ler_arquivo(jogos_lidos);
+
+    printf("\nJogos lidos do arquivo:\n");
+
+    for(j = 0; j < n; j++)
+  {
+	 mostrar_quina(jogos_lidos[j]);
+  }
+
+    int vencedor[5]; 
+
+    printf("\nDigite os 5 numeros da sequencia ganhadora (ex: 01-10-25-35-70): ");
 
 	/* não pode usar struct
 		pq não foi passado em sala :'( */
 	int vencedor[5], resultados[n][2]={};
 	const int JOGO=0;
 	const int ACERTO=1;
+  
+    scanf("%d-%d-%d-%d-%d",
+	 &vencedor[0],
+	 &vencedor[1],
+	 &vencedor[2],
+	 &vencedor[3],
+	 &vencedor[4]);
 
-	sortear_quina(vencedor);
-	ordenar(vencedor,5);
-	printf("Premiada: ");
-	mostrar_quina(vencedor);
-
+    ordenar(vencedor,5);
+    printf("Premiado: ");
+    mostrar_quina(vencedor);
+    
 	for(j = 0; j < n; j++) {
 		resultados[j][JOGO] = j;
 		resultados[j][ACERTO] = contar_acertos(jogos[j], vencedor);
@@ -78,10 +108,8 @@ main() {
 		}
 	}
 
-
 	return 0;
 }
-
 
 /*	Sortea número de A a B */
 int
@@ -172,6 +200,16 @@ mostrar_quina(int *lista)
 		printf("%02d%c", lista[i], (i != N-1) ? '-' : '\n');
 }
 
+void
+mostrar_quina_acertos(int *lista, int *premio)
+{
+	const int N=5;
+	const char normal[]="\033[m", destaque[]="\033[42;30m";
+	int i;
+	for (i=0; i < N; ++i)
+		printf("%s%02d%s%c", (lista[i] == premio[i]) ? destaque : normal, lista[i], normal, (i != N-1) ? '-' : '\n');
+}
+
 int
 eh_repetido(int n, int *lista, int index)
 {
@@ -210,3 +248,32 @@ salvar_jogo(int *jogo, FILE *arq)
 	return 0;
 }
 
+int
+ler_arquivo(int jogos_lidos[][5])
+{
+	FILE *arq;
+	int qtd = 0;
+
+	arq = fopen("dados.txt", "r");
+
+	if(arq == NULL)
+	{
+		printf("Erro ao abrir arquivo!\n");
+		return 0;
+	}
+
+	while(fscanf(arq,
+		"%d-%d-%d-%d-%d",
+		&jogos_lidos[qtd][0],
+		&jogos_lidos[qtd][1],
+		&jogos_lidos[qtd][2],
+		&jogos_lidos[qtd][3],
+		&jogos_lidos[qtd][4]) == 5)
+	{
+		qtd++;
+	}
+
+	fclose(arq);
+
+	return qtd;
+}
