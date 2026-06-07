@@ -23,41 +23,16 @@ void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
-void ler_arquivo();
+int ler_arquivo(int jogos_lidos[][5]);
+
 
 int
 main() {
 	
-	int n, escolha;
+	int n;
 	FILE *arq;
 	
 	setlocale(LC_ALL, "Portuguese");
-
-	puts(
-		"[ 1 ] Sortear e Salvar\n"
-		"[ 2 ] Ler\n"
-		"[ 3 ] Verificar\n"
-		"[ 0 ] Sair");
-	do {
-		printf("--> ");
-		scanf("%d", &escolha);
-		switch (escolha) {
-			case 1:
-				puts("--- Sorteando ---");
-				break;
-			case 2:
-				puts("--- Lendo ---");
-				break;
-			case 3:
-				puts("--- Verificando ---");
-				break;
-			case 0:
-				break;
-			default:
-				puts("Desulpa. Não entendi.");
-		}
-	} while (escolha != 0);
-
 	printf("Quantos jogos você quer jogar? \n");
 	scanf("%d", &n);
 	
@@ -75,47 +50,50 @@ main() {
 		mostrar_quina(jogos[j]);
 		salvar_jogo(jogos[j], arq);
 	}
+	
 	fclose(arq);
 
-    ler_arquivo();
+    int jogos_lidos[n][5];
 
-    int vencedor[5];
+    ler_arquivo(jogos_lidos);
 
-    printf("\nDigite os 5 numeros da sequencia ganhadora: ");
+    printf("\nJogos lidos do arquivo:\n");
 
-    scanf("%d %d %d %d %d",
-	  &vencedor[0],
-      &vencedor[1],
-	  &vencedor[2],
-	  &vencedor[3],
-	  &vencedor[4]);
+    for(j = 0; j < n; j++)
+  {
+	 mostrar_quina(jogos_lidos[j]);
+  }
 
-   sortear_quina(vencedor);
-   ordenar(vencedor,5);
-   printf("Sequência Ganhadora: \033[7m");
-   mostrar_quina(vencedor);
-   printf("\033[m");
+    int vencedor[5]; 
+
+    printf("\nDigite os 5 numeros da sequencia ganhadora (ex: 01-10-25-35-70): ");
+
+    scanf("%d-%d-%d-%d-%d",
+	 &vencedor[0],
+	 &vencedor[1],
+	 &vencedor[2],
+	 &vencedor[3],
+	 &vencedor[4]);
+
+    ordenar(vencedor,5);
 
     printf("Premiado: ");
     mostrar_quina(vencedor);
 
     for(j = 0; j < n; j++) {
-	 int acertos;
+	int acertos;
 
-	printf("Jogo %d: %d acertos", j + 1, acertos);
+	acertos = contar_acertos(jogos_lidos[j], vencedor);
+
+	 printf("Jogo %d: %d acertos | ", j + 1, acertos);
+	 mostrar_quina_acertos(jogos_lidos[j], vencedor);
 
 	if(acertos == 5) {
 	 	printf(" - PARABÉNS, VC GANHOU A QUINA!");
 	}
-
-	printf("\n");
-	}
-	
-	
-	
-	return 0;
 }
-
+    return 0;
+}
 
 /*	Sortea número de A a B */
 int
@@ -218,28 +196,32 @@ salvar_jogo(int *jogo, FILE *arq)
 	return 0;
 }
 
-void
-ler_arquivo()
+int
+ler_arquivo(int jogos_lidos[][5])
 {
 	FILE *arq;
-	char linha[50];
+	int qtd = 0;
 
 	arq = fopen("dados.txt", "r");
 
 	if(arq == NULL)
 	{
 		printf("Erro ao abrir arquivo!\n");
-		return;
+		return 0;
 	}
 
-	printf("\nJogos gravados no arquivo:\n");
-
-	while(fgets(linha, 50, arq) != NULL)
+	while(fscanf(arq,
+		"%d-%d-%d-%d-%d",
+		&jogos_lidos[qtd][0],
+		&jogos_lidos[qtd][1],
+		&jogos_lidos[qtd][2],
+		&jogos_lidos[qtd][3],
+		&jogos_lidos[qtd][4]) == 5)
 	{
-		printf("%s", linha);
+		qtd++;
 	}
 
 	fclose(arq);
+
+	return qtd;
 }
-
-
