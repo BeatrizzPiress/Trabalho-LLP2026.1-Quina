@@ -235,7 +235,7 @@ int ler(int jogos_lidos[][5])
     int j, n;
 
     n = ler_arquivo(jogos_lidos);
-    printf("\nJogos lidos do arquivo:\n");
+    printf("Jogos lidos do arquivo:\n");
 
     for(j = 0; j < n; j++)
   {
@@ -255,7 +255,7 @@ verificar(int n, int jogos_lidos[][5])
 			return;
 		}
 
-    printf("\nDigite os 5 numeros da sequencia ganhadora (ex: 01-10-25-35-70): ");
+    printf("Digite os 5 numeros da sequencia ganhadora (ex: 01-10-25-35-70): ");
 
     scanf("%d-%d-%d-%d-%d",
 	 &vencedor[0],
