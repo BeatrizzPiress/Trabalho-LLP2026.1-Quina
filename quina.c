@@ -168,7 +168,7 @@ mostrar_quina_acertos(int *lista, int *premio)
 	const char normal[]="\033[m", destaque[]="\033[42;30m";
 	int i;
 	for (i=0; i < N; ++i)
-		printf("%s%02d%s%c", (lista[i] == premio[i]) ? destaque : normal, lista[i], normal, (i != N-1) ? '-' : '\n');
+		printf("%s%02d%s%c", eh_repetido(lista[i], premio, 5) ? destaque : normal, lista[i], normal, (i != N-1) ? '-' : '\n');
 }
 
 int
@@ -286,7 +286,7 @@ int ler(int jogos_lidos[][5])
 void
 verificar(int n, int jogos_lidos[][5])
 {
-    int j,vencedor[5], resultados[n][2]={};
+    int i,j,vencedor[5], resultados[n][2]={};
   	const int JOGO=0;
     const int ACERTO=1;
     
@@ -318,10 +318,11 @@ for(j = 0; j < n; j++) {
 	ordenar_resultados(resultados, n);
 
 	for(j = 0; j < n; j++) {
-		printf("Jogo %d: %d acertos | ", resultados[j][JOGO]+1, resultados[j][ACERTO]);
-		mostrar_quina_acertos(jogos_lidos[j], vencedor);
+		i = resultados[j][JOGO];
+		printf("Jogo %d: %d acertos \t| ", i+1, resultados[j][ACERTO]);
+		mostrar_quina_acertos(jogos_lidos[i], vencedor);
 		if(resultados[j][ACERTO] == 5) {
-			printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+			printf(" - PARABÉNS, VC GANHOU  A QUINA!\n");
 		}
 	}
 
