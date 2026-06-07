@@ -311,7 +311,7 @@ verificar(int n, int jogos_lidos[][5])
   
 for(j = 0; j < n; j++) {
 		resultados[j][JOGO] = j;
-		resultados[j][ACERTO] = contar_acertos(jogos[j], vencedor);
+		resultados[j][ACERTO] = contar_acertos(jogos_lidos[j], vencedor);
 	}
 
 	puts("---- Ordenado:");
@@ -319,7 +319,7 @@ for(j = 0; j < n; j++) {
 
 	for(j = 0; j < n; j++) {
 		printf("Jogo %d: %d acertos | ", resultados[j][JOGO]+1, resultados[j][ACERTO]);
-		mostrar_quina(jogos[j]);
+		mostrar_quina(jogos_lidos[j]);
 		if(resultados[j][ACERTO] == 5) {
 			printf(" - PARABÉNS, VC GANHOU  A QUINA!");
 		}
