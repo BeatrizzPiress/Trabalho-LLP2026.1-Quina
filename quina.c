@@ -25,6 +25,10 @@ int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
 void ler_arquivo();
 
+void sortear_salvar(int n, int jogos[][5], FILE);
+void ler(int *n, int jogos[][5]);
+void verificar(int quinas[][5]);
+
 int
 main() {
 	
