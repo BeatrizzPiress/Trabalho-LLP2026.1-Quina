@@ -49,8 +49,8 @@ main() {
 	/* não pode usar struct
 		pq não foi passado em sala :'( */
 	int vencedor[5], resultados[n][2]={};
-	#define JOGO   0
-	#define ACERTO 1
+	const int JOGO=0;
+	const int ACERTO=1;
 
 	sortear_quina(vencedor);
 	ordenar(vencedor,5);
@@ -130,8 +130,8 @@ ordenar(int *lista, int n)
 void
 ordenar_resultados(int resultados[][2], int n)
 {
-	#define JOGO   0
-	#define ACERTO 1
+	const int JOGO=0;
+	const int ACERTO=1;
 	const int N=2;
 	int j, i, i_max, aux_list[N]={};
 
