@@ -14,8 +14,8 @@ Trabalho do Esdras.
 - - [x] escrever arquivo [vinicius]
 - [x] verificar se ganhou o prêmio[Bia]
 - - [x] perguntar a sequência ganhadora [Bia]
-- - [ ] ler arquivo[Bia]
+- - [x] ler arquivo[Bia]
 - - [x] comparar se acertou[Bia]
 - - - [x] quantos acertou [Bia]
-- - - [ ] ordenar por acertos [vinicius]
-- [ ] menu (Sortear e Salvar, Ler, Verificar, Sair)
+- - - [x] ordenar por acertos [vinicius]
+- [x] menu (Sortear e Salvar, Ler, Verificar, Sair)
