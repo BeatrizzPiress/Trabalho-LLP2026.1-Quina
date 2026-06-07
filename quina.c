@@ -322,7 +322,7 @@ for(j = 0; j < n; j++) {
 		printf("Jogo %d: %d acertos \t| ", i+1, resultados[j][ACERTO]);
 		mostrar_quina_acertos(jogos_lidos[i], vencedor);
 		if(resultados[j][ACERTO] == 5) {
-			printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+			printf(" - PARABÉNS, VC GANHOU  A QUINA!\n");
 		}
 	}
 
