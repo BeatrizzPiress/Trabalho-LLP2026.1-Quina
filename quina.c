@@ -286,7 +286,7 @@ int ler(int jogos_lidos[][5])
 void
 verificar(int n, int jogos_lidos[][5])
 {
-    int j,vencedor[5], resultados[n][2]={};
+    int i,j,vencedor[5], resultados[n][2]={};
   	const int JOGO=0;
     const int ACERTO=1;
     
@@ -318,8 +318,9 @@ for(j = 0; j < n; j++) {
 	ordenar_resultados(resultados, n);
 
 	for(j = 0; j < n; j++) {
-		printf("Jogo %d: %d acertos | ", resultados[j][JOGO]+1, resultados[j][ACERTO]);
-		mostrar_quina_acertos(jogos_lidos[j], vencedor);
+		i = resultados[j][JOGO];
+		printf("Jogo %d: %d acertos | ", i+1, resultados[j][ACERTO]);
+		mostrar_quina_acertos(jogos_lidos[i], vencedor);
 		if(resultados[j][ACERTO] == 5) {
 			printf(" - PARABÉNS, VC GANHOU  A QUINA!");
 		}
