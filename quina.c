@@ -133,20 +133,20 @@ ordenar_resultados(int resultados[][2], int n)
 	const int JOGO=0;
 	const int ACERTO=1;
 	const int N=2;
-	int j, i, i_max, aux_list[N]={};
+	int j, i, i_min, aux_list[N]={};
 
 	for (j=0; j < n; ++j) {
-		i_max = j;
+		i_min = j;
 		
 		for (i=j; i < n; ++i) {
-			if (resultados[i][ACERTO] > resultados[i_max][ACERTO])
-				i_max = i;
+			if (resultados[i][ACERTO] < resultados[i_min][ACERTO])
+				i_min = i;
 		}
 		
-		for (i=j; i < i_max; ++i) {
+		for (i=j; i < i_min; ++i) {
 			copy(N, resultados[i], aux_list);
-			copy(N, resultados[i_max], resultados[i]);
-			copy(N, aux_list, resultados[i_max]);
+			copy(N, resultados[i_min], resultados[i]);
+			copy(N, aux_list, resultados[i_min]);
 		}
 	}
 }
