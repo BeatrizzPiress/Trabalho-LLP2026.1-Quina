@@ -24,6 +24,8 @@ void ordenar(int*,int);
 int eh_repetido(int,int*,int);
 int contar_acertos(int*, int*);
 int salvar_jogo(int*,FILE*);
+void ordenar_resultados(int resultados[][2], int n);
+void copy(int n, int *a, int *b);
 int ler_arquivo(int jogos_lidos[][5]);
 
 
@@ -111,6 +113,42 @@ ordenar(int *lista, int n)
 		lista[j] = lista[i_min];
 		lista[i_min] = aux;
 	}
+}
+
+
+void
+ordenar_resultados(int resultados[][2], int n)
+{
+	const int JOGO=0;
+	const int ACERTO=1;
+	const int N=2;
+	int j, i, i_min, aux_list[N]={};
+
+	for (j=0; j < n; ++j) {
+		i_min = j;
+		
+		for (i=j; i < n; ++i) {
+			if (resultados[i][ACERTO] < resultados[i_min][ACERTO])
+				i_min = i;
+		}
+		
+		for (i=j; i < i_min; ++i) {
+			copy(N, resultados[i], aux_list);
+			copy(N, resultados[i_min], resultados[i]);
+			copy(N, aux_list, resultados[i_min]);
+		}
+	}
+}
+
+
+/* não pode usar sizeof
+	pq não foi passado em sala :'( */
+void
+copy(int n, int *list_a, int *list_b)
+{
+  int i;
+  for (i=0; i < n; ++i)
+  	list_b[i] = list_a[i];
 }
 
 
@@ -248,7 +286,9 @@ int ler(int jogos_lidos[][5])
 void
 verificar(int n, int jogos_lidos[][5])
 {
-    int j,vencedor[5];
+    int j,vencedor[5], resultados[n][2]={};
+  	const int JOGO=0;
+    const int ACERTO=1;
     
 		if (n == -1) {
 			puts("Nenhum jogo sorteado ou lido ainda.");
@@ -267,19 +307,23 @@ verificar(int n, int jogos_lidos[][5])
     ordenar(vencedor,5);
 
     printf("Premiado: ");
-    mostrar_quina(vencedor);
-
-    for(j = 0; j < n; j++) {
-	int acertos;
-
-	acertos = contar_acertos(jogos_lidos[j], vencedor);
-
-	 printf("Jogo %d: %d acertos | ", j + 1, acertos);
-	 mostrar_quina_acertos(jogos_lidos[j], vencedor);
-
-	if(acertos == 5) {
-	 	printf(" - PARABÉNS, VC GANHOU A QUINA!");
+    mostrar_quina_acertos(vencedor,vencedor);
+  
+for(j = 0; j < n; j++) {
+		resultados[j][JOGO] = j;
+		resultados[j][ACERTO] = contar_acertos(jogos_lidos[j], vencedor);
 	}
-}
+
+	puts("---- Ordenado:");
+	ordenar_resultados(resultados, n);
+
+	for(j = 0; j < n; j++) {
+		printf("Jogo %d: %d acertos | ", resultados[j][JOGO]+1, resultados[j][ACERTO]);
+		mostrar_quina_acertos(jogos_lidos[j], vencedor);
+		if(resultados[j][ACERTO] == 5) {
+			printf(" - PARABÉNS, VC GANHOU  A QUINA!");
+		}
+	}
+
 }
 
