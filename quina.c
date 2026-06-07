@@ -168,7 +168,7 @@ mostrar_quina_acertos(int *lista, int *premio)
 	const char normal[]="\033[m", destaque[]="\033[42;30m";
 	int i;
 	for (i=0; i < N; ++i)
-		printf("%s%02d%s%c", (lista[i] == premio[i]) ? destaque : normal, lista[i], normal, (i != N-1) ? '-' : '\n');
+		printf("%s%02d%s%c", eh_repetido(lista[i], premio, 5) ? destaque : normal, lista[i], normal, (i != N-1) ? '-' : '\n');
 }
 
 int
