@@ -122,7 +122,7 @@ ordenar_resultados(int resultados[][2], int n)
 	const int JOGO=0;
 	const int ACERTO=1;
 	const int N=2;
-	int j, i, i_min, aux_list[N]={};
+	int j, i, i_min, aux_list[N];
 
 	for (j=0; j < n; ++j) {
 		i_min = j;
@@ -286,7 +286,7 @@ int ler(int jogos_lidos[][5])
 void
 verificar(int n, int jogos_lidos[][5])
 {
-    int i,j,vencedor[5], resultados[n][2]={};
+    int i,j,vencedor[5], resultados[n][2];
   	const int JOGO=0;
     const int ACERTO=1;
     
@@ -327,4 +327,3 @@ for(j = 0; j < n; j++) {
 	}
 
 }
-
